@@ -1,0 +1,3 @@
+DELETE http://localhost:3000/api/menu/294
+Content-Type: application/json
+
