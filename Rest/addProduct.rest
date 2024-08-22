@@ -2,10 +2,10 @@ POST http://localhost:3000/api/menu
 Content-Type: application/json
 
 {
-    "nombre": "Morcipan",
-    "descripcion": "Delicioso morcipan con ingredientes frescos.",
+    "nombre": "Pancho comun",
+    "descripcion": "Pan de pancho y salchicha comun",
     "precio": 350.00,
-    "id_categoria": 7,
+    "id_categoria": 105,
     "id_subcategoria": null,
     "vegano": false,
     "celiaco": false,
