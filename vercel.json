@@ -9,8 +9,12 @@
     "routes": [
       {
         "src": "/api/(.*)",
-        "dest": "/api/$1"
+        "dest": "app.js"
       }
-    ]
+    ],
+    "scripts": {
+  "start": "node app.js"
+}
+
   }
   
