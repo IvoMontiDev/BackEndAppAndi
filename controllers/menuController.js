@@ -3,8 +3,8 @@ const db = require('../database/conexion');
 
 const getAllProducts = async (req, res) => {
     try {
-        const product = await productos.findAll();
-        res.json(product);
+        const products = await db.query('CALL GetAllProducts')
+        res.json(products);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
