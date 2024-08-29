@@ -19,18 +19,49 @@ const getProductById = async (req, res) => {
         });
 
         if (!results || results.length === 0) {
-            return res.status(404).json({ error: 'Película no encontrada' });
+            return res.status(404).json({ error: 'Producto no encontrado' });
         }
 
         const productDetails = results[0];
         res.json(productDetails);
     } catch (error) {
-        console.error('Error al obtener detalles de la película:', error);
-        res.status(500).json({ error: 'Error al obtener detalles de la película' });
+        console.error('Error al obtener detalles del producto:', error);
+        res.status(500).json({ error: 'Error al obtener detalles del producto' });
     }
 };
 
+const getAllCategories = async (req, res) => {
+    try {
+        const categories = await db.query('CALL GetAllCategories')
+        res.json(categories);
+    }catch(error){
+        res.status(500).json({ error: error.message})
+    }
+}
+
+const getSubCategoriesByCategoryId = async (req, res) => {
+    try {
+        const categoryId = req.params.id;
+        const [results, metadata] = await db.query('CALL GetSubcategoriesByCategoryId(:categoryId)', {
+            replacements: { categoryId },
+            type: db.QueryTypes.SELECT
+        });
+
+        if (!results || results.length === 0) {
+            return res.status(404).json({ error: 'Categoría no encontrada' });
+        }
+
+        res.json(results);
+    } catch (error) {
+        console.error("Error al obtener categorías: ", error);
+        res.status(500).json({ error: "Error al obtener detalles de las categorías" });
+    }
+}
+
 module.exports = {
     getAllProducts,
-    getProductById
+    getProductById,
+    getAllCategories,
+    getSubCategoriesByCategoryId
+
 };
