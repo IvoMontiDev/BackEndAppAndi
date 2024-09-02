@@ -4,7 +4,7 @@ const db = require('../database/conexion');
 const getCartInfo = async (req, res) => {
     try {
         const { id_pedido } = req.params;
-        const [results] = await db.query(`CALL GetCartInfo(:id_pedido)`, {
+        const results = await db.query(`CALL GetCartInfo(:id_pedido)`, {
             replacements: { id_pedido }
         });
         res.status(200).json(results);
