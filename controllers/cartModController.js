@@ -40,7 +40,7 @@ const addProductToOrder = async (req, res) => {
 
 const removeCartItem = async (req, res) => {
     try {
-        const { id_detalle } = req.body;
+        const { id_detalle } = req.params;
         await db.query(`CALL RemoveCartItem(:id_detalle)`, {
             replacements: { id_detalle }
         });
@@ -54,7 +54,7 @@ const removeCartItem = async (req, res) => {
 
 const removeOrder = async (req, res) => {
     try {
-        const { id_pedido } = req.body;
+        const { id_pedido } = req.params;
         await db.query(`CALL RemoveOrder(:id_pedido)`, {
             replacements: { id_pedido }
         });
