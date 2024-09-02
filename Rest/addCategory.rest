@@ -1,9 +1,0 @@
-POST http://localhost:3000/api/menu/categories
-Content-Type: application/json
-
-{
-    "nombre": "Tacos"
-}
-
-
-
