@@ -93,6 +93,21 @@ const updateTableStatus = async (req, res) => {
     }
 };
 
+const updateOrderAndTableStatus = async (req, res) => {
+    try {
+        const { id_pedido, estado } = req.body; // Se espera que id_pedido y estado vengan en el body
+
+        // Ejecutamos el stored procedure
+        const results = await db.query(`CALL UpdateOrderAndTableStatus(:id_pedido, :estado)`, {
+            replacements: { id_pedido, estado }
+        });
+
+        res.status(200).json({ message: 'Estado del pedido y de la mesa actualizado correctamente', results });
+    } catch (error) {
+        console.error('Error al actualizar el estado del pedido y de la mesa:', error);
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el estado del pedido y/o de la mesa' });
+    }
+};
 
 
 
@@ -102,5 +117,6 @@ module.exports = {
     removeCartItem,
     removeOrder,
     updateOrderStatus,
-    updateTableStatus
+    updateTableStatus,
+    updateOrderAndTableStatus
 }
