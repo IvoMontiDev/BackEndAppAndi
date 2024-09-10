@@ -5,7 +5,7 @@ const cartModController = require('../controllers/cartModController');
 
 router.post("/create", cartModController.createOrder);
 router.post("/add", cartModController.addProductToOrder);
-router.get('/mesas', cartController.getAllMesas);
+router.get('/tables', cartController.getAllMesas);
 router.get('/:id_pedido', cartController.getCartInfo);
 router.put('/update/order', cartModController.updateOrderStatus);
 router.put('/update/table', cartModController.updateTableStatus);
