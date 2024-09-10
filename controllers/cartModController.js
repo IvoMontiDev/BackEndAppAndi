@@ -66,11 +66,41 @@ const removeOrder = async (req, res) => {
 };
 
 
+const updateOrderStatus = async (req, res) => {
+    try {
+        const { id_pedido, estado } = req.body; // Se espera que id_pedido y estado vengan en el body
+        const results = await db.query(`CALL UpdateOrderStatus(:id_pedido, :estado)`, {
+            replacements: { id_pedido, estado }
+        });
+        res.status(200).json({ message: 'Estado del pedido actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar el estado del pedido:', error);
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el estado del pedido' });
+    }
+};
+
+
+const updateTableStatus = async (req, res) => {
+    try {
+        const { id_mesa, estado } = req.body; // Se espera que el id_mesa y el nuevo estado vengan en el body
+        const results = await db.query(`CALL UpdateTableStatus(:id_mesa, :estado)`, {
+            replacements: { id_mesa, estado }
+        });
+        res.status(200).json({ message: 'Estado de la mesa actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar el estado de la mesa:', error);
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el estado de la mesa' });
+    }
+};
+
+
 
 
 module.exports = {
     createOrder,
     addProductToOrder,
     removeCartItem,
-    removeOrder
+    removeOrder,
+    updateOrderStatus,
+    updateTableStatus
 }
