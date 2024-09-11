@@ -14,7 +14,7 @@ const getCartInfo = async (req, res) => {
     }
 };
 
-const getAllMesas = async (req, res) => {
+const getAllTables = async (req, res) => {
     try {
         const products = await db.query('CALL GetAllMesas')
         res.json(products);
@@ -25,7 +25,7 @@ const getAllMesas = async (req, res) => {
 
 module.exports = {
     getCartInfo,
-    getAllMesas
+    getAllTables
 }
 
 
