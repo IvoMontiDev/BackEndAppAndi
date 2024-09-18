@@ -5,11 +5,10 @@ const cartModController = require('../controllers/cartModController');
 
 router.post("/create", cartModController.createOrder);
 router.post("/add", cartModController.addProductToOrder);
-router.get('/tables', cartController.getAllTables);
+router.get('/detail/:id_pedido', cartController.getOrderDetailByOrderId);
+router.get('/all', cartController.getAllOrders);
 router.get('/:id_pedido', cartController.getCartInfo);
 router.put('/update/order', cartModController.updateOrderStatus);
-router.put('/update/table', cartModController.updateTableStatus);
-router.put('/update/o&t', cartModController.updateOrderAndTableStatus);
 router.delete('/item/:id_detalle', cartModController.removeCartItem);
 router.delete('/order/:id_pedido', cartModController.removeOrder);
 

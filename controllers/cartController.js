@@ -14,18 +14,36 @@ const getCartInfo = async (req, res) => {
     }
 };
 
-const getAllTables = async (req, res) => {
+const getOrderDetailByOrderId = async (req, res) => {
+
     try {
-        const products = await db.query('CALL GetAllMesas')
-        res.json(products);
+        const { id_pedido } = req.params;
+        const result = await db.query(`CALL GetOrderDetailByOrderId(:id_pedido)`,{
+            replacements: { id_pedido }
+        });
+        
+        res.status(200).json({ detalles: result});
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error al obtener detalles del pedido:', error);
+        res.status(500).json({ error: 'Error al obtener detalles del pedido' });
     }
 };
 
+
+const getAllOrders = async (req, res) => {
+    try {
+        const results = await db.query(`CALL GetAllOrders`)
+        res.json(results);
+    } catch(error){
+        res.status(500).json({ error: error.message})
+    }
+};
+
+
 module.exports = {
     getCartInfo,
-    getAllTables
+    getOrderDetailByOrderId,
+    getAllOrders
 }
 
 
