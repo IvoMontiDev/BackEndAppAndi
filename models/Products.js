@@ -49,7 +49,8 @@ const Producto = sequelize.define('Producto', {
         type: DataTypes.TINYINT,
         allowNull: false,
         defaultValue: false
-    }
+    },
+
 }, {
     tableName: 'productos',
     timestamps: false
