@@ -127,10 +127,32 @@ const deleteCategory = async (req, res) => {
 };
 
 
+const updateStock = async (req, res) => {
+    const { id_producto, stock } = req.body;
+
+    if (id_producto == null || stock == null) {
+        return res.status(400).json({ message: 'Se requiere id_producto y stock.' });
+    }
+
+    try {
+        await db.query('CALL PutModStock(:id_producto, :stock)', {
+            replacements: { id_producto: id_producto,
+                            stock: stock}
+        });
+
+        res.status(200).json({ message: 'Stock actualizado correctamente.' });
+    } catch (error) {
+        console.error('Error al actualizar stock:', error);
+        res.status(500).json({ message: 'Error al actualizar stock.' });
+    }
+};
+
+
 module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
     createCategory,
-    deleteCategory
+    deleteCategory,
+    updateStock
 } 
