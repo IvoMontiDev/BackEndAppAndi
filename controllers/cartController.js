@@ -39,11 +39,24 @@ const getAllOrders = async (req, res) => {
     }
 };
 
+const getOrderByTable = async (req, res) => {
+    try{
+        const { id_table } = req.params;
+        const result = await db.query(`CALL GetOrderByTable(:id_table)`, {
+            replacements : {id_table}
+    })
+    res.status(200).json({result})
+    }catch (error){
+        console.error(`Error al obtener el carro de la mesa ${id_table}`, error);
+    }
+}
+
 
 module.exports = {
     getCartInfo,
     getOrderDetailByOrderId,
-    getAllOrders
+    getAllOrders, 
+    getOrderByTable
 }
 
 

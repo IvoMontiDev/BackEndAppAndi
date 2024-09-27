@@ -5,12 +5,12 @@ const moment = require('moment');
 
 const createOrder = async (req, res) => {
     try {
-        const { id_cliente, id_mesa, id_mozo } = req.body;
+        const { id_cliente, id_mesa} = req.body;
         const tipo_pedido = 'mesa';
         const now = moment().format('YYYY-MM-DD HH:mm:ss');
 
         // Ejecutar el stored procedure
-        await db.query(`CALL CreateOrder(${id_cliente}, ${id_mesa}, ${id_mozo}, '${now}', '${tipo_pedido}', @orderId)`);
+        await db.query(`CALL CreateOrder(${id_cliente}, ${id_mesa}, '${now}', '${tipo_pedido}', @orderId)`);
 
         // Recuperar el orderId generado
         const [results] = await db.query('SELECT @orderId AS orderId');

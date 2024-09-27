@@ -55,9 +55,23 @@ const updateOrderAndTableStatus = async (req, res) => {
 };
 
 
+const updateTableWaiter = async (req, res) => {
+    try{
+        const { id_mesa, id_mozo} = req.body;
+        const results = await db.query(`CALL UpdateTableWaiter(:id_mesa, :id_mozo)`, {
+            replacements: {id_mesa, id_mozo}
+        })
+        res.status(200).json({ message:`Mesero actualizado`})
+    } catch (error){
+        console.error('Error al actualizar el mozo de la mesa:', error);
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el mozo de la mesa' });
+    }
+}
+
 module.exports = {
     getAllTables,
     getUserAndPasswByTable,
     updateTableStatus,
-    updateOrderAndTableStatus
+    updateOrderAndTableStatus,
+    updateTableWaiter
 }
