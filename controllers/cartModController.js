@@ -79,6 +79,36 @@ const updateOrderStatus = async (req, res) => {
     }
 };
 
+const updateOrderDetail = async (req, res) => {
+    try {
+        // Obtener los datos desde el cuerpo de la solicitud (id_pedido, id_producto, cantidad)
+        const { id_pedido, id_producto, cantidad } = req.body;
+
+        // Ejecutar el stored procedure
+        const result = await db.query(`CALL UpdateOrderDetail(:id_pedido, :id_producto, :cantidad)`, {
+            replacements: {
+                id_pedido,
+                id_producto,
+                cantidad
+            }
+        });
+
+        // Enviar respuesta de éxito
+        res.status(200).json({
+            message: 'Detalle del pedido actualizado correctamente',
+            result
+        });
+    } catch (error) {
+        // Manejo de errores
+        console.error('Error al actualizar el detalle del pedido:', error);
+        res.status(500).json({
+            message: 'Hubo un error al actualizar el detalle del pedido',
+            error
+        });
+    }
+};
+
+
 
 
 module.exports = {
@@ -86,5 +116,6 @@ module.exports = {
     addProductToOrder,
     removeCartItem,
     removeOrder,
-    updateOrderStatus
+    updateOrderStatus, 
+    updateOrderDetail
 }

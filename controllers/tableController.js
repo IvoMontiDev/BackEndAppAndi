@@ -68,10 +68,42 @@ const updateTableWaiter = async (req, res) => {
     }
 }
 
+
+const updateTableInfo = async (req, res) => {
+    try {
+        const { id_mesa, capacidad, estado, id_mozo } = req.body; // Obtener los datos del cuerpo de la petición
+        const result = await db.query(`CALL UpdateTableInfo(:id_mesa, :capacidad, :estado, :id_mozo)`, {
+            replacements: { id_mesa, capacidad, estado, id_mozo }
+        });
+        res.status(200).json({ message: 'Información de la mesa actualizada exitosamente', result });
+    } catch (error) {
+        console.error(`Error al actualizar la mesa con id ${id_mesa}:`, error);
+        res.status(500).json({ error: 'Error al actualizar la mesa' });
+    }
+};
+
+
+const createTable = async (req, res) => {
+    try {
+        const { capacidad, id_mozo } = req.body; // Obtener los datos del cuerpo de la petición
+        const result = await db.query(`CALL CreateTable(:capacidad, :id_mozo)`, {
+            replacements: { capacidad, id_mozo }
+        });
+        res.status(201).json({ message: 'Mesa creada exitosamente', result });
+    } catch (error) {
+        console.error('Error al crear la mesa:', error);
+        res.status(500).json({ error: 'Error al crear la mesa' });
+    }
+};
+
+
+
 module.exports = {
     getAllTables,
     getUserAndPasswByTable,
     updateTableStatus,
     updateOrderAndTableStatus,
-    updateTableWaiter
+    updateTableWaiter, 
+    updateTableInfo,
+    createTable
 }
