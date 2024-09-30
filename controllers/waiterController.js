@@ -37,7 +37,19 @@ const updateWaiter = async (req, res) => {
 };
 
 
+const getAllWaiters = async (req, res) => {
+    try {
+        const result = await db.query('CALL GetAllWaiters()');
+        res.status(200).json(result); // Enviamos el resultado de la consulta
+    } catch (error) {
+        console.error('error en el SP', error);
+        res.status(500).json({ error: 'Error al obtener los mozos' });
+    }
+};
+
+
 module.exports = {
     createWaiter,
-    updateWaiter
+    updateWaiter,
+    getAllWaiters
 }
