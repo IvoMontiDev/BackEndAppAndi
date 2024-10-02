@@ -1,13 +1,14 @@
 const db = require('../database/conexion');
-const moment = require('moment');
-
+const moment = require('moment-timezone');
 
 
 const createOrder = async (req, res) => {
     try {
-        const { id_cliente, id_mesa} = req.body;
+        const { id_cliente, id_mesa } = req.body;
         const tipo_pedido = 'mesa';
-        const now = moment().format('YYYY-MM-DD HH:mm:ss');
+
+        // Obtener la fecha actual en la zona horaria de Buenos Aires
+        const now = moment().tz('America/Argentina/Buenos_Aires').format('YYYY-MM-DD HH:mm:ss');
 
         // Ejecutar el stored procedure
         await db.query(`CALL CreateOrder(${id_cliente}, ${id_mesa}, '${now}', '${tipo_pedido}', @orderId)`);
