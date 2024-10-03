@@ -8,10 +8,12 @@ const createOrder = async (req, res) => {
         const tipo_pedido = 'mesa';
 
         // Obtener la fecha actual en la zona horaria de Buenos Aires
-        const now = moment().utcOffset('GTM-03:00').format('YYYY-MM-DD HH:mm:ss');
+        const nowUtc = moment.utc(); // Hora en UTC
+        const nowBuenosAires = nowUtc.subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss');
+        
 
         // Ejecutar el stored procedure
-        await db.query(`CALL CreateOrder(${id_cliente}, ${id_mesa}, '${now}', '${tipo_pedido}', @orderId)`);
+        await db.query(`CALL CreateOrder(${id_cliente}, ${id_mesa}, '${nowBuenosAires}', '${tipo_pedido}', @orderId)`);
 
         // Recuperar el orderId generado
         const [results] = await db.query('SELECT @orderId AS orderId');
