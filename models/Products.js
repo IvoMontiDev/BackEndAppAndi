@@ -50,6 +50,16 @@ const Producto = sequelize.define('Producto', {
         allowNull: false,
         defaultValue: false
     },
+    stock: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
+    },
+    plato_del_dia: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
+    }
 
 }, {
     tableName: 'productos',

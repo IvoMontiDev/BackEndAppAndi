@@ -147,6 +147,24 @@ const updateStock = async (req, res) => {
     }
 };
 
+const updatePlatoDelDia = async (req, res) => {
+    try {
+        const { id_producto, p_del_dia } = req.body;
+
+        // Llamar al SP UpdatePlatoDelDia para actualizar el estado de p_d_dia
+        await db.query(`CALL UpdatePlatoDelDia(${id_producto}, ${p_del_dia})`);
+
+        res.status(200).json({ message: 'Estado de plato del día actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar el estado de plato del día:', error);
+        res.status(500).json({ error: 'Ocurrió un error al actualizar el estado de plato del día' });
+    }
+};
+
+
+
+
+
 
 module.exports = {
     createProduct,
@@ -154,5 +172,6 @@ module.exports = {
     deleteProduct,
     createCategory,
     deleteCategory,
-    updateStock
+    updateStock,
+    updatePlatoDelDia
 } 

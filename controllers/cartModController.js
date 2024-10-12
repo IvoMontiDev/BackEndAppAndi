@@ -29,10 +29,10 @@ const createOrder = async (req, res) => {
 
 const addProductToOrder = async (req, res) => {
     try {
-        const { orderId, id_producto, cantidad, p_del_dia } = req.body;
+        const { orderId, id_producto, cantidad } = req.body;
 
         // Llamar al SP AddProductToOrder para agregar el producto a la orden existente
-        await db.query(`CALL AddProductToOrder(${orderId}, ${id_producto}, ${cantidad}, ${p_del_dia})`);
+        await db.query(`CALL AddProductToOrder(${orderId}, ${id_producto}, ${cantidad})`);
 
         res.status(200).json({ message: 'Producto agregado a la orden exitosamente' });
     } catch (error) {
@@ -111,6 +111,21 @@ const updateOrderDetail = async (req, res) => {
     }
 };
 
+const putProductsAsOld = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+
+        // Llamar al SP PutProductsAsOld para marcar los productos como "viejos"
+        await db.query(`CALL PutProductsAsOld(${orderId})`);
+
+        res.status(200).json({ message: 'Productos marcados como viejos correctamente' });
+    } catch (error) {
+        console.error('Error al marcar los productos como viejos:', error);
+        res.status(500).json({ error: 'Ocurrió un error al marcar los productos como viejos' });
+    }
+};
+
+
 
 
 
@@ -120,5 +135,6 @@ module.exports = {
     removeCartItem,
     removeOrder,
     updateOrderStatus, 
-    updateOrderDetail
+    updateOrderDetail,
+    putProductsAsOld
 }

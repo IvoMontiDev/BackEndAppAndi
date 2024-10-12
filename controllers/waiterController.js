@@ -47,9 +47,55 @@ const getAllWaiters = async (req, res) => {
     }
 };
 
+const callWaiter = async (req, res) => {
+    try {
+        const { id_mesa } = req.body;
+
+        // Llamar al SP CallWaiter para actualizar el campo CallW
+        await db.query(`CALL CallWaiter(${id_mesa})`);
+
+        res.status(200).json({ message: 'Mozo llamado correctamente' });
+    } catch (error) {
+        console.error('Error al llamar al mozo:', error);
+        res.status(500).json({ error: 'Ocurrió un error al llamar al mozo' });
+    }
+};
+
+const requestBill = async (req, res) => {
+    try {
+        const { id_mesa } = req.body;
+
+        // Llamar al SP RequestBill para actualizar el campo cuenta
+        await db.query(`CALL RequestBill(${id_mesa})`);
+
+        res.status(200).json({ message: 'Cuenta solicitada correctamente' });
+    } catch (error) {
+        console.error('Error al solicitar la cuenta:', error);
+        res.status(500).json({ error: 'Ocurrió un error al solicitar la cuenta' });
+    }
+};
+
+const updateNotifications = async (req, res) => {
+    try {
+        const { id_mesa } = req.body;
+
+        // Llamar al SP UpdateNotifications para resetear los campos CallW y cuenta
+        await db.query(`CALL UpdateNotifications(${id_mesa})`);
+
+        res.status(200).json({ message: 'Notificaciones reseteadas correctamente' });
+    } catch (error) {
+        console.error('Error al resetear las notificaciones:', error);
+        res.status(500).json({ error: 'Ocurrió un error al resetear las notificaciones' });
+    }
+};
+
+
 
 module.exports = {
     createWaiter,
     updateWaiter,
-    getAllWaiters
+    getAllWaiters,
+    callWaiter,
+    requestBill,
+    updateNotifications
 }
