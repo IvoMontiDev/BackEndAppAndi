@@ -96,6 +96,35 @@ const createTable = async (req, res) => {
     }
 };
 
+const updateTableNote = async (req, res) => {
+    try {
+        const { id_mesa, nota } = req.body;
+
+        // Usamos placeholders para evitar inyección SQL
+        const result = await db.query('CALL PutMesaNota(:p_id_mesa, :p_nota)', {
+            replacements: { p_id_mesa: id_mesa, p_nota: nota },
+        });
+
+        res.status(200).json({ message: 'Nota agregada correctamente', result });
+    } catch (error) {
+        console.error('Error al agregar la nota', error);
+        res.status(500).json({ error: 'Error al agregar la nota' });
+    }
+};
+
+
+const deleteTableNote = async (req, res) => {
+    try{
+        const {id_mesa} = req.body;
+        const result = await db.query(`CALL DeleteMesaNota(:p_id_mesa)`,{
+            replacements : {p_id_mesa: id_mesa},
+    });
+            res.status(200).json({message: "nota eliminada", result });
+    } catch(error){
+        console.error("error al eliminar nota", error);
+        res.status(500).json({ error: "error al eliminar nota" });
+    }
+}
 
 
 module.exports = {
@@ -105,5 +134,7 @@ module.exports = {
     updateOrderAndTableStatus,
     updateTableWaiter, 
     updateTableInfo,
-    createTable
+    createTable,
+    updateTableNote,
+    deleteTableNote
 }
